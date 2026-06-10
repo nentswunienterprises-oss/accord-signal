@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Submit an Accord Signal Capability Clarity Brief.">
+  <title>Submit Brief | Accord Signal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Accord Signal home">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="quad quad-tl"></span><span class="quad quad-tr"></span><span class="quad quad-bl"></span><span class="quad quad-br"></span><span class="quad quad-center"></span>
+        </span>
+        <span class="brand-lockup"><span class="brand-name">Accord</span><span class="brand-sub">Signal</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/services/">Services</a>
+        <a href="/os/">Accord Signal OS</a>
+        <a href="/#contact">Contact</a>
+      </nav>
+      <a class="button button-ghost header-cta" href="/brief/">Submit a Brief</a>
+    </header>
+
+    <main>
+      <section class="page-hero section">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-line"></span>Capability Clarity Brief</p>
+          <h1 class="page-title">Submit the operating problem through a real institutional intake.</h1>
+          <p class="section-text">Briefs are stored, reference-tracked, and reviewed through the Accord Signal operating process. They do not disappear into an email inbox.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="brief-layout">
+          <div class="journey-panel" data-reveal>
+            <p class="statement-index">What happens next</p>
+            <div class="process-grid">
+              <article><h3>1. Intake</h3><p>Your brief is submitted and assigned a reference number.</p></article>
+              <article><h3>2. Review</h3><p>Accord Signal assesses whether the issue is role, signal, attention, capability, or readiness related.</p></article>
+              <article><h3>3. Response</h3><p>Qualified briefs move toward a Capability Clarity Call or a recommended diagnostic path.</p></article>
+            </div>
+          </div>
+
+          <div class="contact-form brief-form-panel" data-reveal>
+            <form id="brief-form">
+              <div class="form-grid">
+                <label class="field">
+                  <span>Name</span>
+                  <input type="text" name="requesterName" required>
+                </label>
+                <label class="field">
+                  <span>Email</span>
+                  <input type="email" name="requesterEmail" required>
+                </label>
+                <label class="field">
+                  <span>Role / Title</span>
+                  <input type="text" name="requesterRole">
+                </label>
+                <label class="field">
+                  <span>Organization</span>
+                  <input type="text" name="organizationName" required>
+                </label>
+                <label class="field">
+                  <span>Team Size</span>
+                  <select name="teamSize" required>
+                    <option value="">Select</option>
+                    <option>1-10</option>
+                    <option>11-50</option>
+                    <option>51-200</option>
+                    <option>201-1000</option>
+                    <option>1000+</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Primary Need</span>
+                  <select name="primaryNeed" required>
+                    <option value="">Select</option>
+                    <option>Role Architecture</option>
+                    <option>Capability Mapping</option>
+                    <option>Attention Alignment</option>
+                    <option>Readiness Development</option>
+                    <option>Team Operating Systems</option>
+                    <option>Full Accord Signal OS</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Urgency</span>
+                  <select name="urgency">
+                    <option value="">Select</option>
+                    <option>Immediate</option>
+                    <option>30 days</option>
+                    <option>60 days</option>
+                    <option>90+ days</option>
+                  </select>
+                </label>
+                <label class="field">
+                  <span>Budget Range</span>
+                  <select name="budgetRange">
+                    <option value="">Select</option>
+                    <option>Diagnostic only</option>
+                    <option>Project build</option>
+                    <option>Project + retainer</option>
+                    <option>Retainer partnership</option>
+                  </select>
+                </label>
+                <label class="field field-full">
+                  <span>Decision Maker</span>
+                  <input type="text" name="decisionMaker" placeholder="Who can approve the work internally?">
+                </label>
+                <label class="field field-full">
+                  <span>Main Problem</span>
+                  <textarea name="mainProblem" rows="6" required placeholder="Describe what is unclear, weak, scattered, or inconsistent."></textarea>
+                </label>
+                <label class="field field-full">
+                  <span>Desired Outcome</span>
+                  <textarea name="desiredOutcome" rows="5" required placeholder="Describe what you want to become clearer, stronger, or more reliable."></textarea>
+                </label>
+              </div>
+
+              <div class="form-actions">
+                <button class="button button-primary" type="submit" data-submit-label="Submit Brief">Submit Brief</button>
+                <p class="form-note">Briefs are stored under Accord Signal intake and reviewed internally.</p>
+              </div>
+            </form>
+
+            <div class="success-panel is-hidden" id="brief-success" aria-live="polite">
+              <p class="statement-index">Brief Received</p>
+              <h3>Your submission has been recorded.</h3>
+              <p>Use the reference number below in any follow-up communication.</p>
+              <div class="reference-box">
+                <strong id="reference-number">AS-00000000-0000</strong>
+                <button class="button button-secondary copy-ref" type="button" id="copy-reference">Copy Reference</button>
+              </div>
+              <p class="form-note" id="copy-feedback">Reference number ready to copy.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <span class="brand-mark brand-mark-small" aria-hidden="true">
+          <span class="quad quad-tl"></span><span class="quad quad-tr"></span><span class="quad quad-bl"></span><span class="quad quad-br"></span><span class="quad quad-center"></span>
+        </span>
+        <p>Accord Signal</p>
+      </div>
+      <p class="footer-copy">Capability Infrastructure | Structured Intake | Institutional Review</p>
+      <p class="footer-meta">A division of Nenterprises (Pty) Ltd.</p>
+    </footer>
+  </div>
+
+  <script src="/script.js"></script>
+</body>
+</html>

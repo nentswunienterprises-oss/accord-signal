@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Accord Signal internal brief dashboard.">
+  <title>Accord Signal Admin Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="site-shell admin-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Accord Signal home">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="quad quad-tl"></span><span class="quad quad-tr"></span><span class="quad quad-bl"></span><span class="quad quad-br"></span><span class="quad quad-center"></span>
+        </span>
+        <span class="brand-lockup"><span class="brand-name">Accord</span><span class="brand-sub">Signal</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/services/">Services</a>
+        <a href="/os/">Accord Signal OS</a>
+        <a href="/brief/">Submit Brief</a>
+      </nav>
+      <a class="button button-ghost header-cta" href="/brief/">Open Brief Intake</a>
+    </header>
+
+    <main>
+      <section class="page-hero section">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow"><span class="eyebrow-line"></span>Internal Dashboard</p>
+          <h1 class="page-title">Capability brief submissions</h1>
+          <p class="section-text">Internal view for reviewing, tracking, and referencing institutional intake submissions.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="login-panel" id="admin-login" data-reveal>
+          <div class="section-heading compact">
+            <p class="eyebrow"><span class="eyebrow-line"></span>Access</p>
+            <h2>Enter the admin access key.</h2>
+          </div>
+          <form id="admin-login-form" class="inline-form">
+            <label class="field field-full">
+              <span>Admin key</span>
+              <input type="password" name="adminKey" required>
+            </label>
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">Unlock Dashboard</button>
+              <p class="form-note" id="admin-login-feedback">Use the access key configured for this environment.</p>
+            </div>
+          </form>
+        </div>
+
+        <div class="dashboard-wrap is-hidden" id="admin-dashboard">
+          <div class="dashboard-grid">
+            <article class="metric-card">
+              <p class="statement-index">Total briefs</p>
+              <strong id="metric-total">0</strong>
+            </article>
+            <article class="metric-card">
+              <p class="statement-index">New briefs</p>
+              <strong id="metric-new">0</strong>
+            </article>
+            <article class="metric-card">
+              <p class="statement-index">Today's briefs</p>
+              <strong id="metric-today">0</strong>
+            </article>
+          </div>
+
+          <div class="submission-grid">
+            <section class="submission-list">
+              <div class="section-heading compact">
+                <p class="eyebrow"><span class="eyebrow-line"></span>Queue</p>
+                <h2>Recent submissions</h2>
+              </div>
+              <div id="submission-table"></div>
+            </section>
+
+            <aside class="submission-detail" id="submission-detail">
+              <div class="section-heading compact">
+                <p class="eyebrow"><span class="eyebrow-line"></span>Detail</p>
+                <h2>Select a submission</h2>
+              </div>
+              <p class="section-text">Choose a brief from the queue to inspect the full submission.</p>
+            </aside>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <span class="brand-mark brand-mark-small" aria-hidden="true">
+          <span class="quad quad-tl"></span><span class="quad quad-tr"></span><span class="quad quad-bl"></span><span class="quad quad-br"></span><span class="quad quad-center"></span>
+        </span>
+        <p>Accord Signal</p>
+      </div>
+      <p class="footer-copy">Internal Dashboard | Capability Brief Intake</p>
+      <p class="footer-meta">A division of Nenterprises (Pty) Ltd.</p>
+    </footer>
+  </div>
+
+  <script src="/script.js"></script>
+  <script src="/admin.js"></script>
+</body>
+</html>
