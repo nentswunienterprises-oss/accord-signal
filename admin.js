@@ -38,7 +38,7 @@ function renderDetail(submission) {
 
   submissionDetail.innerHTML = `
     <div class="section-heading compact">
-      <p class="eyebrow"><span class="eyebrow-line"></span>Detail</p>
+      <p class="eyebrow">Detail</p>
       <h2>${escapeHtml(submission.referenceNumber)}</h2>
     </div>
     <div class="detail-stack">
