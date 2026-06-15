@@ -355,9 +355,7 @@ button {
 }
 
 .eyebrow-line {
-  width: 3.5rem;
-  height: 1px;
-  background: currentColor;
+  display: none;
 }
 
 .hero-panel,
