@@ -117,7 +117,7 @@ async function generatePdfDocument(options) {
       format: "A4",
       printBackground: true,
       margin: {
-        top: "16mm",
+        top: "22mm",
         right: "14mm",
         bottom: "26mm",
         left: "14mm",
