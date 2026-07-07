@@ -1,7 +1,6 @@
 {
   "functions": {
     "api/generate-pdf.js": {
-      "runtime": "nodejs22.x",
       "memory": 1024,
       "maxDuration": 60,
       "includeFiles": "accord-signal-letterhead-system/templates/**"
