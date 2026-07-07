@@ -11,7 +11,7 @@
 
     const autosave = draftsApi.loadAutosave();
     let state = composer.coerceState(autosave?.payload || composer.getDefaultState("letter"));
-    let drafts = [];
+    let drafts = draftsApi.listLocalDrafts();
     let selectedDraftId = "";
     let draftName = state.documentTitle || `${state.documentType} draft`;
     let statusMessage = autosave?.savedAt

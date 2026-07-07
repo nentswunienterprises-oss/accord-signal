@@ -34,23 +34,51 @@ async function resolveExecutablePath() {
     const chromiumPath = await chromium.executablePath();
 
     if (chromiumPath && fs.existsSync(chromiumPath)) {
-      if (fs.statSync(chromiumPath).isFile() && path.extname(chromiumPath).toLowerCase() === ".exe") {
-        return chromiumPath;
+      if (fs.statSync(chromiumPath).isFile()) {
+        if (process.platform !== "win32") {
+          return chromiumPath;
+        }
+
+        if (path.extname(chromiumPath).toLowerCase() === ".exe") {
+          return chromiumPath;
+        }
       }
 
-      const nestedExecutable = [
-        path.join(chromiumPath, "chrome.exe"),
-        path.join(chromiumPath, "chromium.exe"),
-        path.join(chromiumPath, "chromium"),
-      ].find((candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile());
+      if (fs.statSync(chromiumPath).isDirectory()) {
+        const nestedExecutable = [
+          path.join(chromiumPath, "chrome.exe"),
+          path.join(chromiumPath, "chromium.exe"),
+          path.join(chromiumPath, "chromium"),
+        ].find((candidate) => fs.existsSync(candidate) && fs.statSync(candidate).isFile());
 
-      if (nestedExecutable) {
-        return nestedExecutable;
+        if (nestedExecutable) {
+          return nestedExecutable;
+        }
       }
     }
   } catch {}
 
   return null;
+}
+
+function getLaunchOptions(executablePath) {
+  const isServerlessLinux = process.platform !== "win32" && executablePath.includes("/tmp/");
+
+  return {
+    executablePath,
+    args: chromium.args,
+    defaultViewport: {
+      width: 1240,
+      height: 1754,
+      deviceScaleFactor: 1.5,
+    },
+    headless: true,
+    ...(isServerlessLinux
+      ? {
+          ignoreHTTPSErrors: true,
+        }
+      : {}),
+  };
 }
 
 async function generatePdfDocument(options) {
@@ -60,16 +88,7 @@ async function generatePdfDocument(options) {
     throw new Error("No Chromium executable was found for PDF generation.");
   }
 
-  const browser = await puppeteer.launch({
-    executablePath,
-    args: chromium.args,
-    defaultViewport: {
-      width: 1240,
-      height: 1754,
-      deviceScaleFactor: 1.5,
-    },
-    headless: true,
-  });
+  const browser = await puppeteer.launch(getLaunchOptions(executablePath));
 
   try {
     const page = await browser.newPage();
