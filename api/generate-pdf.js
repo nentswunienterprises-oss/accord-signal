@@ -1,5 +1,4 @@
 const path = require("path");
-const { generatePdfDocument } = require("../accord-signal-letterhead-system/pdf-service");
 const {
   logAuditEvent,
   normalizeBoolean,
@@ -79,6 +78,7 @@ async function handleGeneratePdfRequest(request, response) {
   }
 
   try {
+    const { generatePdfDocument } = require("../accord-signal-letterhead-system/pdf-service");
     const body = await readJsonBody(request, {
       maxBytes: 350 * 1024,
     });
@@ -114,7 +114,7 @@ async function handleGeneratePdfRequest(request, response) {
   } catch (error) {
     console.error(error);
     sendJson(response, error.statusCode || 500, {
-      error: error.statusCode ? error.message : "Unable to generate the PDF.",
+      error: error.message || "Unable to generate the PDF.",
     });
   }
 }
