@@ -80,40 +80,44 @@
       vertical-align: top;
     }
 
-    .mark {
-      width: 28mm;
-      height: 28mm;
-      border-radius: 8mm;
-      background: linear-gradient(135deg, #f6f3ee 0%, #d9d4ca 100%);
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      grid-template-rows: repeat(2, 1fr);
-      gap: 2.4mm;
-      padding: 4mm;
+    .brand-lockup {
+      display: inline-block;
+      max-width: 56mm;
     }
 
-    .mark span:nth-child(1) { background: #6b6f3d; }
-    .mark span:nth-child(2) { background: #232426; }
-    .mark span:nth-child(3) { background: #7c8088; }
-    .mark span:nth-child(4) { background: #d1cbc1; }
+    .brand-symbol {
+      display: block;
+      width: 21.5mm;
+      height: 21.5mm;
+    }
+
+    .logo-olive { fill: #6f734a; }
+    .logo-charcoal { fill: #2a2d33; }
+    .logo-slate { fill: #6d7075; }
+    .logo-mist { fill: #cbc8c2; }
 
     .brand-tagline,
     .meta-label {
       font-family: "Space Grotesk", Arial, sans-serif;
-      font-size: 8.5pt;
+      font-size: 7.2pt;
       font-weight: 700;
-      letter-spacing: 0.24em;
+      letter-spacing: 0.23em;
       text-transform: uppercase;
-      color: #6b6f3d;
+      color: #6f734a;
+    }
+
+    .brand-tagline {
+      margin-top: 1.6mm;
     }
 
     .brand-name {
-      margin-top: 3mm;
+      margin-top: 1.2mm;
       font-family: "Space Grotesk", Arial, sans-serif;
-      font-size: 18pt;
+      font-size: 12.4pt;
       font-weight: 700;
-      letter-spacing: 0.14em;
+      letter-spacing: 0.11em;
       text-transform: uppercase;
+      color: #25282e;
     }
 
     .header-right {
@@ -237,9 +241,17 @@
     <div class="document-card">
       <header class="header">
         <div class="header-left">
-          <div class="mark"><span></span><span></span><span></span><span></span></div>
-          <div class="brand-tagline">{{BRAND_TAGLINE}}</div>
-          <div class="brand-name">{{BRAND_NAME}}</div>
+          <div class="brand-lockup" aria-label="{{BRAND_NAME}}">
+            <svg class="brand-symbol" viewBox="0 0 600 600" role="img" aria-hidden="true">
+              <path class="logo-olive" d="M2130 4165 l0 -405 195 0 195 0 0 205 0 205 205 0 205 0 0 200 0 200 -400 0 -400 0 0 -405z" transform="translate(0,600) scale(0.1,-0.1)"/>
+              <path class="logo-charcoal" d="M3085 4370 l0 -201 203 3 202 3 0 -207 0 -208 195 0 195 0 0 405 0 405 -397 0 -398 0 0 -200z" transform="translate(0,600) scale(0.1,-0.1)"/>
+              <path class="logo-olive" d="M2850 3683 l0 -158 152 2 153 2 3 156 3 155 -156 0 -155 0 0 -157z" transform="translate(0,600) scale(0.1,-0.1)"/>
+              <path class="logo-slate" d="M2130 3200 l0 -400 400 0 400 0 0 195 0 195 -205 0 -205 0 0 205 0 205 -195 0 -195 0 0 -400z" transform="translate(0,600) scale(0.1,-0.1)"/>
+              <path class="logo-mist" d="M3492 3395 l3 -205 -205 0 -205 0 0 -195 0 -195 398 0 397 0 0 400 0 400 -195 0 -196 0 3 -205z" transform="translate(0,600) scale(0.1,-0.1)"/>
+            </svg>
+            <div class="brand-tagline">{{BRAND_TAGLINE}}</div>
+            <div class="brand-name">{{BRAND_NAME}}</div>
+          </div>
         </div>
         <div class="header-right">
           <div class="meta-label">Date</div>
