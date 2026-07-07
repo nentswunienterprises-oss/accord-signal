@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{DOCUMENT_TITLE}}</title>
+  <style>
+    @page {
+      size: A4;
+      margin: 0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: #f6f3ee;
+      color: #232426;
+      font-family: "Manrope", Arial, sans-serif;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page-shell {
+      position: relative;
+      min-height: 100vh;
+      padding: 20mm 16mm 22mm;
+      background:
+        radial-gradient(circle at top left, rgba(107, 111, 61, 0.12), transparent 30%),
+        linear-gradient(180deg, #fbf8f2 0%, #f6f3ee 100%);
+    }
+
+    .page-shell::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      opacity: 0.12;
+      background:
+        linear-gradient(90deg, rgba(35, 36, 38, 0.03) 1px, transparent 1px),
+        linear-gradient(rgba(35, 36, 38, 0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      pointer-events: none;
+      {{REFERENCE_BACKGROUND_STYLE}}
+    }
+
+    .document-card {
+      position: relative;
+      z-index: 1;
+      min-height: calc(100vh - 42mm);
+      padding: 18mm 16mm 16mm;
+      border: 1px solid rgba(35, 36, 38, 0.1);
+      border-radius: 26px;
+      background: rgba(255, 253, 250, 0.94);
+      box-shadow: 0 18px 60px rgba(35, 36, 38, 0.08);
+    }
+
+    .document-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 76mm;
+      height: 44mm;
+      background: linear-gradient(135deg, rgba(107, 111, 61, 0.18), rgba(107, 111, 61, 0.02));
+      clip-path: polygon(100% 0, 100% 100%, 0 0);
+      border-top-right-radius: 26px;
+    }
+
+    .header {
+      display: table;
+      width: 100%;
+      margin-bottom: 12mm;
+    }
+
+    .header-left,
+    .header-right {
+      display: table-cell;
+      vertical-align: top;
+    }
+
+    .mark {
+      width: 28mm;
+      height: 28mm;
+      border-radius: 8mm;
+      background: linear-gradient(135deg, #f6f3ee 0%, #d9d4ca 100%);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(2, 1fr);
+      gap: 2.4mm;
+      padding: 4mm;
+    }
+
+    .mark span:nth-child(1) { background: #6b6f3d; }
+    .mark span:nth-child(2) { background: #232426; }
+    .mark span:nth-child(3) { background: #7c8088; }
+    .mark span:nth-child(4) { background: #d1cbc1; }
+
+    .brand-tagline,
+    .meta-label {
+      font-family: "Space Grotesk", Arial, sans-serif;
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+      color: #6b6f3d;
+    }
+
+    .brand-name {
+      margin-top: 3mm;
+      font-family: "Space Grotesk", Arial, sans-serif;
+      font-size: 18pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    .header-right {
+      text-align: right;
+    }
+
+    .meta-value {
+      margin-top: 2mm;
+      font-size: 10pt;
+      line-height: 1.7;
+      color: #575b31;
+    }
+
+    .title-label {
+      font-family: "Space Grotesk", Arial, sans-serif;
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: #6b6f3d;
+    }
+
+    h1 {
+      margin: 3mm 0 3mm;
+      font-family: "Space Grotesk", Arial, sans-serif;
+      font-size: 28pt;
+      line-height: 1;
+      letter-spacing: -0.05em;
+    }
+
+    .client-line {
+      margin: 0 0 8mm;
+      color: #575b31;
+      font-size: 11pt;
+    }
+
+    .subject-box {
+      margin-bottom: 8mm;
+      padding: 5mm;
+      border-radius: 5mm;
+      background: #f6f3ee;
+      border: 1px solid rgba(35, 36, 38, 0.08);
+    }
+
+    .body {
+      font-size: 11pt;
+      line-height: 1.8;
+    }
+
+    .body h1,
+    .body h2,
+    .body h3 {
+      margin: 8mm 0 3mm;
+      font-family: "Space Grotesk", Arial, sans-serif;
+      line-height: 1.1;
+    }
+
+    .body h2 {
+      font-size: 16pt;
+    }
+
+    .body h3 {
+      font-size: 13pt;
+    }
+
+    .body p,
+    .body ul,
+    .body ol,
+    .body blockquote,
+    .body table {
+      margin: 0 0 4mm;
+    }
+
+    .body ul,
+    .body ol {
+      padding-left: 6mm;
+    }
+
+    .body blockquote {
+      padding: 4mm 5mm;
+      border-left: 1.2mm solid #6b6f3d;
+      background: rgba(107, 111, 61, 0.08);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10pt;
+    }
+
+    th,
+    td {
+      padding: 3mm;
+      border-bottom: 1px solid rgba(35, 36, 38, 0.12);
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      font-family: "Space Grotesk", Arial, sans-serif;
+      font-size: 8pt;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #575b31;
+    }
+
+    .footer {
+      position: absolute;
+      left: 16mm;
+      right: 16mm;
+      bottom: 12mm;
+      padding-top: 4mm;
+      border-top: 1px solid rgba(35, 36, 38, 0.08);
+      font-size: 9pt;
+      color: #66686e;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-shell">
+    <div class="document-card">
+      <header class="header">
+        <div class="header-left">
+          <div class="mark"><span></span><span></span><span></span><span></span></div>
+          <div class="brand-tagline">{{BRAND_TAGLINE}}</div>
+          <div class="brand-name">{{BRAND_NAME}}</div>
+        </div>
+        <div class="header-right">
+          <div class="meta-label">Date</div>
+          <div class="meta-value">{{DATE}}</div>
+          <div class="meta-label" style="margin-top:4mm;">Reference</div>
+          <div class="meta-value">{{REFERENCE_NUMBER}}</div>
+        </div>
+      </header>
+
+      <div class="title-label">{{DOCUMENT_TYPE}}</div>
+      <h1>{{DOCUMENT_TITLE}}</h1>
+      <p class="client-line">Prepared for {{CLIENT_NAME}}</p>
+
+      <div class="subject-box">
+        <div class="meta-label">Subject</div>
+        <div class="meta-value">{{SUBJECT}}</div>
+      </div>
+
+      <section class="body">{{BODY}}</section>
+      <footer class="footer">{{FOOTER}}</footer>
+    </div>
+  </div>
+</body>
+</html>

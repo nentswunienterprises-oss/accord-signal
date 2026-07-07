@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Accord Signal internal PDF generator.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <title>Accord Signal PDF Generator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="site-shell admin-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Accord Signal home">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="quad quad-tl"></span><span class="quad quad-tr"></span><span class="quad quad-bl"></span><span class="quad quad-br"></span><span class="quad quad-center"></span>
+        </span>
+        <span class="brand-lockup"><span class="brand-name">Accord</span><span class="brand-sub">Signal</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="/generate-email/">Email Generator</a>
+        <a href="/generate-pdf/">PDF Generator</a>
+        <a href="/admin/">Dashboard</a>
+      </nav>
+      <button class="button button-ghost header-cta" type="button" id="tool-logout">Log out</button>
+    </header>
+
+    <main>
+      <section class="page-hero section">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Internal Tool</p>
+          <h1 class="page-title">Generate branded PDF documents.</h1>
+          <p class="section-text">Compose one source document, preview the A4 layout, and send the approved markdown through the protected PDF runtime for download.</p>
+        </div>
+      </section>
+
+      <section class="section document-tools-section">
+        <div class="document-tools-grid">
+          <div class="document-tools-column" id="document-composer-root"></div>
+          <aside class="document-tools-column">
+            <section class="tool-card">
+              <div class="tool-card-heading">
+                <div>
+                  <p class="statement-index">Actions</p>
+                  <h2>PDF output</h2>
+                </div>
+                <p class="tool-status" id="pdf-preview-status">Loading preview...</p>
+              </div>
+              <div class="tool-actions-row">
+                <label class="field tool-toggle-field">
+                  <span>Reference background</span>
+                  <input type="checkbox" id="use-reference-background">
+                </label>
+                <button class="button button-primary tool-mini-button" type="button" id="download-pdf">Generate PDF</button>
+              </div>
+            </section>
+
+            <section class="tool-card">
+              <div class="tool-card-heading">
+                <div>
+                  <p class="statement-index">Preview</p>
+                  <h2>Print layout</h2>
+                </div>
+              </div>
+              <iframe id="pdf-preview-frame" class="preview-frame preview-frame-large" title="Accord Signal PDF preview"></iframe>
+            </section>
+
+            <section class="tool-card">
+              <div class="tool-card-heading">
+                <div>
+                  <p class="statement-index">Source</p>
+                  <h2>Markdown and frontmatter</h2>
+                </div>
+              </div>
+              <label class="field field-full">
+                <span>Generated markdown</span>
+                <textarea id="markdown-output" rows="16" readonly></textarea>
+              </label>
+            </section>
+          </aside>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/script.js"></script>
+  <script src="/src/lib/email-logo-svg.js"></script>
+  <script src="/src/lib/document-composer.js"></script>
+  <script src="/src/lib/document-drafts.js"></script>
+  <script src="/src/lib/email-generator.js"></script>
+  <script src="/src/components/internal-tools-layout.js"></script>
+  <script src="/src/components/document-composer-panel.js"></script>
+  <script src="/src/pages/generate-pdf-page.js"></script>
+</body>
+</html>

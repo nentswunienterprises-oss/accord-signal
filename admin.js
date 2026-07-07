@@ -147,10 +147,15 @@ function renderTable(submissions) {
 }
 
 async function loadDashboard(adminKey) {
+  const headers = {};
+
+  if (adminKey) {
+    headers["x-admin-key"] = adminKey;
+  }
+
   const response = await fetch("/api/submissions", {
-    headers: {
-      "x-admin-key": adminKey,
-    },
+    credentials: "same-origin",
+    headers,
   });
 
   const payload = await response.json();
@@ -206,8 +211,5 @@ if (loginForm) {
   });
 
   const savedKey = sessionStorage.getItem(storageKey);
-
-  if (savedKey) {
-    attemptLogin(savedKey);
-  }
+  attemptLogin(savedKey || "");
 }

@@ -1,29 +1,14 @@
 const { createSubmission, listSubmissions } = require("../lib/submissions-store");
 const { loadEnvFile } = require("../lib/load-env");
+const { isAuthorizedRequest } = require("../lib/internal-auth");
 
 loadEnvFile();
-
-const ADMIN_KEY = process.env.ADMIN_ACCESS_KEY || "accord-signal-admin";
 
 function sendJson(response, statusCode, payload) {
   response.writeHead(statusCode, {
     "Content-Type": "application/json; charset=utf-8",
   });
   response.end(JSON.stringify(payload));
-}
-
-function getHeader(request, name) {
-  const header = request.headers?.[name];
-
-  if (Array.isArray(header)) {
-    return header[0];
-  }
-
-  return header;
-}
-
-function isAuthorized(request) {
-  return getHeader(request, "x-admin-key") === ADMIN_KEY;
 }
 
 function normalizeBody(body) {
@@ -75,7 +60,7 @@ function validateSubmission(payload) {
 
 async function handleSubmissionsRequest(request, response) {
   if (request.method === "GET") {
-    if (!isAuthorized(request)) {
+    if (!isAuthorizedRequest(request)) {
       sendJson(response, 401, { error: "Unauthorized" });
       return;
     }

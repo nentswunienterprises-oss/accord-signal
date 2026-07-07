@@ -1051,6 +1051,138 @@ button {
   white-space: pre-wrap;
 }
 
+.document-tools-section {
+  padding-top: 1rem;
+}
+
+.document-tools-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+  gap: 1.25rem;
+  align-items: start;
+}
+
+.document-tools-column,
+.tool-stack {
+  display: grid;
+  gap: 1.25rem;
+}
+
+.tool-card,
+.tool-subcard {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(35, 36, 38, 0.08);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.64)),
+    radial-gradient(circle at top, rgba(107, 111, 61, 0.08), transparent 30%);
+  box-shadow: var(--shadow-soft);
+}
+
+.tool-card {
+  padding: 1.5rem;
+}
+
+.tool-subcard {
+  padding: 1.1rem;
+}
+
+.tool-card-heading,
+.tool-subcard-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tool-card-heading h2,
+.tool-subcard-header h3 {
+  margin: 0;
+  font-family: "Space Grotesk", sans-serif;
+  line-height: 1.05;
+}
+
+.tool-card-heading h2 {
+  font-size: 1.45rem;
+}
+
+.tool-subcard-header h3 {
+  font-size: 1.02rem;
+}
+
+.tool-status,
+.tool-inline-note {
+  margin: 0;
+  color: rgba(35, 36, 38, 0.66);
+  line-height: 1.6;
+}
+
+.tool-actions-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: end;
+  gap: 0.8rem;
+}
+
+.tool-mini-button {
+  min-height: 42px;
+  padding: 0.78rem 1rem;
+  font-size: 0.74rem;
+  letter-spacing: 0.14em;
+}
+
+.tool-select-field {
+  min-width: min(100%, 300px);
+}
+
+.tool-toggle-field {
+  min-width: 180px;
+}
+
+.tool-toggle-field input {
+  width: auto;
+  margin-top: 0.35rem;
+}
+
+.tool-total-note {
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(35, 36, 38, 0.08);
+}
+
+.preview-frame {
+  width: 100%;
+  min-height: 660px;
+  border: 1px solid rgba(35, 36, 38, 0.1);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.86);
+}
+
+.preview-frame-large {
+  min-height: 880px;
+}
+
+.document-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.document-table th,
+.document-table td {
+  padding: 0.85rem;
+  border-bottom: 1px solid rgba(35, 36, 38, 0.08);
+  text-align: left;
+  vertical-align: top;
+}
+
+.document-table th {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.74rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(35, 36, 38, 0.66);
+}
+
 .site-footer {
   display: grid;
   gap: 0.8rem;
@@ -1106,7 +1238,8 @@ button {
   .positioning-grid,
   .contact-layout,
   .brief-layout,
-  .submission-grid {
+  .submission-grid,
+  .document-tools-grid {
     grid-template-columns: 1fr;
   }
 

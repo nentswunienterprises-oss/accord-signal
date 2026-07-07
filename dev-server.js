@@ -3,6 +3,10 @@ const fs = require("fs");
 const path = require("path");
 const { loadEnvFile } = require("./lib/load-env");
 const handleSubmissionsRequest = require("./api/submissions");
+const handleGeneratePdfRequest = require("./api/generate-pdf");
+const handleDocumentDraftsRequest = require("./api/document-drafts");
+const handleInternalSessionRequest = require("./api/internal-session");
+const { isAuthorizedRequest } = require("./lib/internal-auth");
 
 loadEnvFile();
 
@@ -16,6 +20,7 @@ const contentTypes = {
   ".js": "application/javascript; charset=utf-8",
   ".json": "application/json; charset=utf-8",
   ".md": "text/markdown; charset=utf-8",
+  ".mjs": "application/javascript; charset=utf-8",
   ".png": "image/png",
   ".svg": "image/svg+xml; charset=utf-8",
   ".txt": "text/plain; charset=utf-8",
@@ -60,11 +65,43 @@ function serveStatic(request, response) {
   });
 }
 
+function isProtectedInternalRoute(pathname) {
+  return (
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/generate-email") ||
+    pathname.startsWith("/generate-pdf")
+  );
+}
+
 const server = http.createServer((request, response) => {
   const url = new URL(request.url || "/", `http://${request.headers.host}`);
 
   if (url.pathname === "/api/submissions") {
     handleSubmissionsRequest(request, response);
+    return;
+  }
+
+  if (url.pathname === "/api/generate-pdf") {
+    handleGeneratePdfRequest(request, response);
+    return;
+  }
+
+  if (url.pathname === "/api/document-drafts") {
+    handleDocumentDraftsRequest(request, response);
+    return;
+  }
+
+  if (url.pathname === "/api/internal-session") {
+    handleInternalSessionRequest(request, response);
+    return;
+  }
+
+  if (isProtectedInternalRoute(url.pathname) && !isAuthorizedRequest(request)) {
+    response.writeHead(302, {
+      Location: `/internal/?next=${encodeURIComponent(url.pathname)}`,
+      "Cache-Control": "no-store",
+    });
+    response.end();
     return;
   }
 

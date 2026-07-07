@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Accord Signal internal access.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+  <title>Accord Signal Internal Access</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="site-shell admin-shell">
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Accord Signal home">
+        <span class="brand-mark" aria-hidden="true">
+          <span class="quad quad-tl"></span><span class="quad quad-tr"></span><span class="quad quad-bl"></span><span class="quad quad-br"></span><span class="quad quad-center"></span>
+        </span>
+        <span class="brand-lockup"><span class="brand-name">Accord</span><span class="brand-sub">Signal</span></span>
+      </a>
+      <button class="menu-toggle" type="button" aria-expanded="false" aria-controls="site-nav"><span></span><span></span></button>
+      <nav class="site-nav" id="site-nav" aria-label="Primary">
+        <a href="/">Home</a>
+        <a href="/services/">Services</a>
+        <a href="/os/">Accord Signal OS</a>
+        <a href="/brief/">Submit Brief</a>
+      </nav>
+      <a class="button button-ghost header-cta" href="/brief/">Open Brief Intake</a>
+    </header>
+
+    <main>
+      <section class="page-hero section">
+        <div class="section-heading" data-reveal>
+          <p class="eyebrow">Internal Access</p>
+          <h1 class="page-title">Unlock the document generator.</h1>
+          <p class="section-text">Use the internal access key for this environment to open the protected email, PDF, and dashboard routes.</p>
+        </div>
+      </section>
+
+      <section class="section">
+        <div class="login-panel" data-reveal>
+          <div class="section-heading compact">
+            <p class="eyebrow">Authentication</p>
+            <h2>Enter the internal access key.</h2>
+          </div>
+          <form id="internal-access-form" class="inline-form">
+            <label class="field field-full">
+              <span>Internal key</span>
+              <input type="password" name="adminKey" required>
+            </label>
+            <div class="form-actions">
+              <button class="button button-primary" type="submit">Open Internal Tools</button>
+              <p class="form-note" id="internal-access-feedback">Enter the internal access key configured for this environment.</p>
+            </div>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand">
+        <span class="brand-mark brand-mark-small" aria-hidden="true">
+          <span class="quad quad-tl"></span><span class="quad quad-tr"></span><span class="quad quad-bl"></span><span class="quad quad-br"></span><span class="quad quad-center"></span>
+        </span>
+        <p>Accord Signal</p>
+      </div>
+      <p class="footer-copy">Internal Access | Protected Operations</p>
+      <p class="footer-meta">A division of Nenterprises (Pty) Ltd.</p>
+    </footer>
+  </div>
+
+  <script src="/script.js"></script>
+  <script src="/src/pages/internal-access-page.js"></script>
+</body>
+</html>
