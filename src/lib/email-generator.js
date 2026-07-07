@@ -152,13 +152,14 @@
       ...parsed.data,
       ...overrides,
     };
+    const documentType = formatDocumentTypeLabel(data.documentType || "letter");
 
     return {
       BODY: renderMarkdownHtml(parsed.body),
       CLIENT_NAME: escapeHtml(data.clientName || "Client"),
       DATE: escapeHtml(data.date || new Date().toLocaleDateString("en-ZA")),
       DOCUMENT_TITLE: escapeHtml(data.documentTitle || "Document"),
-      DOCUMENT_TYPE: escapeHtml(data.documentType || "letter"),
+      DOCUMENT_TYPE: escapeHtml(documentType),
       FOOTER: escapeHtml(data.footer || "Accord Signal"),
       GREETING: escapeHtml(data.greeting || "Dear Team,"),
       REFERENCE_NUMBER: escapeHtml(data.referenceNumber || ""),
@@ -168,6 +169,18 @@
       SENDER_TITLE: escapeHtml(data.senderTitle || ""),
       SUBJECT: escapeHtml(data.subject || data.documentTitle || ""),
     };
+  }
+
+  function formatDocumentTypeLabel(documentType) {
+    const normalized = String(documentType || "letter").trim().toLowerCase();
+    const labels = {
+      letter: "Letter",
+      "internal-document": "Internal Document",
+      proposal: "Proposal",
+      quotation: "Quotation",
+    };
+
+    return labels[normalized] || normalized.replace(/[-_]+/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
   }
 
   function injectTemplate(templateHtml, templateData) {
@@ -194,6 +207,7 @@
 
   const api = {
     escapeHtml,
+    formatDocumentTypeLabel,
     injectTemplate,
     parseMarkdownDocument,
     renderEmailHtml,

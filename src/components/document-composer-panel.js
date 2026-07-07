@@ -136,7 +136,9 @@
           (draft) =>
             `<option value="${draft.id}" ${draft.id === selectedDraftId ? "selected" : ""}>${escapeHtml(
               draft.name
-            )} - ${escapeHtml(draft.documentType)} - ${new Date(draft.updatedAt).toLocaleDateString(
+            )} - ${escapeHtml(composer.getDocumentTypeLabel(draft.documentType))} - ${new Date(
+              draft.updatedAt
+            ).toLocaleDateString(
               "en-ZA"
             )}</option>`
         ),

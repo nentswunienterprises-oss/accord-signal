@@ -1,6 +1,7 @@
 (function createDocumentComposerLibrary(globalScope) {
   const DOCUMENT_TYPES = [
     { id: "letter", label: "Letter" },
+    { id: "internal-document", label: "Internal Document" },
     { id: "proposal", label: "Proposal" },
     { id: "quotation", label: "Quotation" },
   ];
@@ -78,6 +79,29 @@
       ];
     }
 
+    if (documentType === "internal-document") {
+      return [
+        {
+          id: createId("section"),
+          title: "Purpose",
+          body: "State the internal purpose of this document and the operational context it addresses.",
+          bullets: [],
+        },
+        {
+          id: createId("section"),
+          title: "Key Direction",
+          body: "Set out the decisions, standards, or instructions that internal teams are expected to follow.",
+          bullets: [],
+        },
+        {
+          id: createId("section"),
+          title: "Execution Notes",
+          body: "Clarify owners, timing, dependencies, and any internal follow-through required.",
+          bullets: [],
+        },
+      ];
+    }
+
     return [
       {
         id: createId("section"),
@@ -112,6 +136,10 @@
   }
 
   function getDefaultSubject(documentType) {
+    if (documentType === "internal-document") {
+      return "Internal document for business operations";
+    }
+
     if (documentType === "proposal") {
       return "Proposal for capability infrastructure support";
     }
@@ -124,6 +152,10 @@
   }
 
   function getDefaultTitle(documentType) {
+    if (documentType === "internal-document") {
+      return "Internal Business Document";
+    }
+
     if (documentType === "proposal") {
       return "Capability Infrastructure Proposal";
     }
@@ -162,6 +194,11 @@
 
   function normalizeDocumentType(documentType) {
     return DOCUMENT_TYPES.some((entry) => entry.id === documentType) ? documentType : "letter";
+  }
+
+  function getDocumentTypeLabel(documentType) {
+    const entry = DOCUMENT_TYPES.find((item) => item.id === normalizeDocumentType(documentType));
+    return entry ? entry.label : "Letter";
   }
 
   function createId(prefix) {
@@ -367,6 +404,7 @@
     createId,
     createReferenceNumber,
     formatCurrency,
+    getDocumentTypeLabel,
     getDefaultState,
     getDefaultSections,
     getLineItemTotal,
