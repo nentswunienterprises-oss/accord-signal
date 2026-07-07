@@ -3,7 +3,7 @@ const path = require("path");
 const matter = require("gray-matter");
 const { marked } = require("marked");
 
-const TEMPLATE_DIR = path.join(process.cwd(), "accord-signal-letterhead-system", "templates");
+const TEMPLATE_DIR = path.join(__dirname, "templates");
 
 marked.setOptions({
   breaks: true,

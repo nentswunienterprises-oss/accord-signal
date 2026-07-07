@@ -4,6 +4,8 @@ const chromium = require("@sparticuz/chromium");
 const puppeteer = require("puppeteer-core");
 const { renderTemplateHtml } = require("./render-utils");
 
+chromium.setGraphicsMode = false;
+
 async function resolveExecutablePath() {
   const explicitPath = process.env.PUPPETEER_EXECUTABLE_PATH;
 
@@ -61,18 +63,26 @@ async function resolveExecutablePath() {
   return null;
 }
 
-function getLaunchOptions(executablePath) {
-  const isServerlessLinux = process.platform !== "win32" && executablePath.includes("/tmp/");
+async function getLaunchOptions(executablePath) {
+  const isServerlessLinux =
+    process.platform !== "win32" &&
+    (process.env.VERCEL === "1" || executablePath.includes("/tmp/"));
+  const headless = isServerlessLinux ? "shell" : true;
 
   return {
     executablePath,
-    args: chromium.args,
+    args: isServerlessLinux
+      ? await puppeteer.defaultArgs({
+          args: chromium.args,
+          headless,
+        })
+      : await puppeteer.defaultArgs(),
     defaultViewport: {
       width: 1240,
       height: 1754,
       deviceScaleFactor: 1.5,
     },
-    headless: true,
+    headless,
     ...(isServerlessLinux
       ? {
           ignoreHTTPSErrors: true,
@@ -88,7 +98,7 @@ async function generatePdfDocument(options) {
     throw new Error("No Chromium executable was found for PDF generation.");
   }
 
-  const browser = await puppeteer.launch(getLaunchOptions(executablePath));
+  const browser = await puppeteer.launch(await getLaunchOptions(executablePath));
 
   try {
     const page = await browser.newPage();
