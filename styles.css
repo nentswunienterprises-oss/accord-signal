@@ -1155,7 +1155,7 @@ button {
   min-height: 660px;
   border: 1px solid rgba(35, 36, 38, 0.1);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.86);
+  background: linear-gradient(180deg, rgba(217, 212, 202, 0.62), rgba(246, 243, 238, 0.92));
 }
 
 .preview-frame-large {

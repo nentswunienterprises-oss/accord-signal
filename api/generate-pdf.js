@@ -11,7 +11,7 @@ const {
 const { isAuthorizedRequest } = require("../lib/internal-auth");
 
 const requestWindow = new Map();
-const MAX_REQUESTS_PER_MINUTE = 10;
+const MAX_REQUESTS_PER_MINUTE = 30;
 
 function getRequestIp(request) {
   const forwardedFor = request.headers["x-forwarded-for"];
