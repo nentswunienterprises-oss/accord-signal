@@ -162,6 +162,8 @@
       border-radius: 5mm;
       background: #f6f3ee;
       border: 1px solid rgba(35, 36, 38, 0.08);
+      break-inside: avoid;
+      page-break-inside: avoid;
     }
 
     .body {
@@ -175,6 +177,8 @@
       margin: 8mm 0 3mm;
       font-family: "Space Grotesk", Arial, sans-serif;
       line-height: 1.1;
+      break-after: avoid-page;
+      page-break-after: avoid;
     }
 
     .body h2 {
@@ -191,6 +195,8 @@
     .body blockquote,
     .body table {
       margin: 0 0 4mm;
+      orphans: 3;
+      widows: 3;
     }
 
     .body ul,

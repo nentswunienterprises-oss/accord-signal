@@ -119,7 +119,7 @@ async function generatePdfDocument(options) {
       margin: {
         top: "16mm",
         right: "14mm",
-        bottom: "18mm",
+        bottom: "26mm",
         left: "14mm",
       },
       preferCSSPageSize: true,
