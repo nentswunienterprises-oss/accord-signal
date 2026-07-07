@@ -1,16 +1,26 @@
 const fs = require("fs/promises");
 const path = require("path");
 const matter = require("gray-matter");
-const { marked } = require("marked");
 
 const TEMPLATE_DIR = path.join(__dirname, "templates");
+let markedInstancePromise = null;
 
-marked.setOptions({
-  breaks: true,
-  gfm: true,
-  headerIds: false,
-  mangle: false,
-});
+async function getMarked() {
+  if (!markedInstancePromise) {
+    markedInstancePromise = import("marked").then(({ marked }) => {
+      marked.setOptions({
+        breaks: true,
+        gfm: true,
+        headerIds: false,
+        mangle: false,
+      });
+
+      return marked;
+    });
+  }
+
+  return markedInstancePromise;
+}
 
 function sanitizeMarkdownSource(markdown) {
   return String(markdown || "")
@@ -36,11 +46,12 @@ function escapeHtml(value) {
     .replaceAll("'", "&#39;");
 }
 
-function renderMarkdownHtml(markdownBody) {
+async function renderMarkdownHtml(markdownBody) {
+  const marked = await getMarked();
   return marked.parse(sanitizeMarkdownSource(markdownBody || ""));
 }
 
-function resolveTemplateData(parsedDocument, overrides = {}) {
+async function resolveTemplateData(parsedDocument, overrides = {}) {
   const data = {
     ...parsedDocument.data,
     ...overrides,
@@ -48,7 +59,7 @@ function resolveTemplateData(parsedDocument, overrides = {}) {
   const documentType = formatDocumentTypeLabel(data.documentType || "letter");
 
   return {
-    BODY: renderMarkdownHtml(parsedDocument.body),
+    BODY: await renderMarkdownHtml(parsedDocument.body),
     BRAND_NAME: "Accord Signal",
     BRAND_TAGLINE: "Capability Infrastructure",
     CLIENT_NAME: escapeHtml(data.clientName || "Client"),
@@ -108,7 +119,7 @@ function buildReferenceBackgroundStyle(useReferenceBackground) {
 async function renderTemplateHtml(options) {
   const parsed = parseDocumentMarkdown(options.markdown);
   const templateHtml = await loadTemplate(options.templateName);
-  const templateData = resolveTemplateData(parsed, options.overrides);
+  const templateData = await resolveTemplateData(parsed, options.overrides);
 
   return injectTemplate(templateHtml, {
     ...templateData,
