@@ -454,7 +454,11 @@
       parts.push(normalized.closing);
     }
 
-    const signatureLines = [normalized.signOff, normalized.senderName, normalized.senderTitle].filter(Boolean);
+    const signatureLines = [
+      normalized.signOff,
+      normalized.senderName ? `**${normalized.senderName}**` : "",
+      normalized.senderTitle,
+    ].filter(Boolean);
     parts.push(signatureLines.join("\n"));
 
     return ["---", toFrontmatter(normalized), "---", "", parts.filter(Boolean).join("\n\n"), ""].join("\n");
