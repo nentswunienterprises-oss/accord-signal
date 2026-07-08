@@ -112,6 +112,12 @@
                   serializeSectionBullets(section)
                 )}</textarea>
               </label>
+              <label class="field field-full">
+                <span>Body after bullets (optional)</span>
+                <textarea data-section-field="bodyAfterBullets" data-section-id="${section.id}" rows="4">${escapeHtml(
+                  section.bodyAfterBullets || ""
+                )}</textarea>
+              </label>
             </article>
           `
         )
@@ -595,6 +601,7 @@
                   subheading: "",
                   body: "",
                   bullets: [],
+                  bodyAfterBullets: "",
                 },
               ],
             });

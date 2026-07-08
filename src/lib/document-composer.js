@@ -42,6 +42,7 @@
           subheading: "",
           body: "Describe the institutional objective this proposal is designed to address.",
           bullets: [],
+          bodyAfterBullets: "",
         },
         {
           id: createId("section"),
@@ -50,6 +51,7 @@
           subheading: "",
           body: "Outline the workstreams, deliverables, and operating responsibilities included in the engagement.",
           bullets: ["Capability diagnosis", "Role architecture", "Delivery rhythm"],
+          bodyAfterBullets: "",
         },
         {
           id: createId("section"),
@@ -58,6 +60,7 @@
           subheading: "",
           body: "Clarify how the work will be sequenced, reviewed, and governed.",
           bullets: [],
+          bodyAfterBullets: "",
         },
         {
           id: createId("section"),
@@ -66,6 +69,7 @@
           subheading: "",
           body: "State the commercial basis, timing assumptions, and payment expectations.",
           bullets: [],
+          bodyAfterBullets: "",
         },
       ];
     }
@@ -79,6 +83,7 @@
           subheading: "",
           body: "Summarize the quoted work and any planning assumptions.",
           bullets: [],
+          bodyAfterBullets: "",
         },
         {
           id: createId("section"),
@@ -87,6 +92,7 @@
           subheading: "",
           body: "Clarify exclusions, validity period, and invoicing expectations.",
           bullets: [],
+          bodyAfterBullets: "",
         },
       ];
     }
@@ -100,6 +106,7 @@
           subheading: "",
           body: "State the internal purpose of this document and the operational context it addresses.",
           bullets: [],
+          bodyAfterBullets: "",
         },
         {
           id: createId("section"),
@@ -108,6 +115,7 @@
           subheading: "",
           body: "Set out the decisions, standards, or instructions that internal teams are expected to follow.",
           bullets: [],
+          bodyAfterBullets: "",
         },
         {
           id: createId("section"),
@@ -116,6 +124,7 @@
           subheading: "",
           body: "Clarify owners, timing, dependencies, and any internal follow-through required.",
           bullets: [],
+          bodyAfterBullets: "",
         },
       ];
     }
@@ -128,6 +137,7 @@
         subheading: "",
         body: "Set out the situation, instruction, or concern that this letter addresses.",
         bullets: [],
+        bodyAfterBullets: "",
       },
       {
         id: createId("section"),
@@ -136,6 +146,7 @@
         subheading: "",
         body: "State the core response, finding, or direction clearly and directly.",
         bullets: [],
+        bodyAfterBullets: "",
       },
       {
         id: createId("section"),
@@ -144,6 +155,7 @@
         subheading: "",
         body: "List the immediate actions, owners, or follow-up commitments.",
         bullets: [],
+        bodyAfterBullets: "",
       },
     ];
   }
@@ -240,6 +252,7 @@
       bullets: Array.isArray(section?.bullets)
         ? section.bullets.map((bullet) => String(bullet || "").trim()).filter(Boolean)
         : [],
+      bodyAfterBullets: String(section?.bodyAfterBullets || "").trim(),
     };
   }
 
@@ -275,7 +288,15 @@
       intro: String(partialState?.intro || "").trim(),
       sections: (Array.isArray(partialState?.sections) ? partialState.sections : baseline.sections)
         .map(normalizeSection)
-        .filter((section) => section.title || section.body || section.bullets.length),
+        .filter(
+          (section) =>
+            section.title ||
+            section.body ||
+            section.bullets.length ||
+            section.bodyAfterBullets ||
+            section.heading ||
+            section.subheading
+        ),
       lineItems:
         documentType === "quotation"
           ? (Array.isArray(partialState?.lineItems) ? partialState.lineItems : baseline.lineItems)
@@ -422,6 +443,10 @@
 
       if (section.bullets.length) {
         parts.push(section.bullets.map((bullet) => `- ${bullet}`).join("\n"));
+      }
+
+      if (section.bodyAfterBullets) {
+        parts.push(section.bodyAfterBullets);
       }
     });
 
