@@ -283,7 +283,10 @@
               .filter((item) => item.description || item.quantity || item.unitPrice)
           : [],
       notes: String(partialState?.notes || "").trim(),
-      closing: String(partialState?.closing || baseline.closing).trim(),
+      closing:
+        typeof partialState?.closing === "undefined" || partialState?.closing === null
+          ? String(baseline.closing || "").trim()
+          : String(partialState.closing).trim(),
       signOff: String(partialState?.signOff || baseline.signOff).trim(),
       senderName: String(partialState?.senderName || baseline.senderName).trim(),
       senderTitle: String(partialState?.senderTitle || baseline.senderTitle).trim(),
