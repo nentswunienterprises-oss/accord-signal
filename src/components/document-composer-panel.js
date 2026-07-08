@@ -14,6 +14,7 @@
     let drafts = draftsApi.listLocalDrafts();
     let selectedDraftId = "";
     let draftName = state.documentTitle || `${state.documentType} draft`;
+    let draggedSectionId = "";
     let statusMessage = autosave?.savedAt
       ? `Autosave restored from ${new Date(autosave.savedAt).toLocaleString("en-ZA")}.`
       : "Ready to draft.";
@@ -43,7 +44,7 @@
       return state.sections
         .map(
           (section, index) => `
-            <article class="tool-card tool-subcard" data-section-id="${section.id}">
+            <article class="tool-card tool-subcard" data-section-id="${section.id}" data-section-index="${index}" draggable="true">
               <div class="tool-subcard-header">
                 <h3>Section ${index + 1}</h3>
                 <button class="button button-ghost tool-mini-button" type="button" data-action="remove-section" data-section-id="${section.id}">Remove</button>
@@ -405,6 +406,59 @@
             sections: nextSections,
           });
           emitChange();
+        });
+      });
+
+      root.querySelectorAll("[data-section-id][draggable='true']").forEach((element) => {
+        element.addEventListener("dragstart", (event) => {
+          draggedSectionId = event.currentTarget.getAttribute("data-section-id") || "";
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", draggedSectionId);
+          event.currentTarget.classList.add("is-dragging");
+        });
+
+        element.addEventListener("dragend", (event) => {
+          draggedSectionId = "";
+          event.currentTarget.classList.remove("is-dragging");
+          root.querySelectorAll(".is-drop-target").forEach((node) => node.classList.remove("is-drop-target"));
+        });
+
+        element.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+
+          const targetSectionId = event.currentTarget.getAttribute("data-section-id");
+          const rect = event.currentTarget.getBoundingClientRect();
+          const position = event.clientY > rect.top + rect.height / 2 ? "after" : "before";
+
+          event.currentTarget.setAttribute("data-drop-position", position);
+          root.querySelectorAll(".is-drop-target").forEach((node) => node.classList.remove("is-drop-target"));
+          event.currentTarget.classList.add("is-drop-target");
+
+          if (targetSectionId === draggedSectionId) {
+            return;
+          }
+        });
+
+        element.addEventListener("dragleave", (event) => {
+          event.currentTarget.classList.remove("is-drop-target");
+          event.currentTarget.removeAttribute("data-drop-position");
+        });
+
+        element.addEventListener("drop", (event) => {
+          event.preventDefault();
+
+          const targetSectionId = event.currentTarget.getAttribute("data-section-id");
+          const position = event.currentTarget.getAttribute("data-drop-position") || "before";
+
+          if (!draggedSectionId || !targetSectionId || draggedSectionId === targetSectionId) {
+            return;
+          }
+
+          state = composer.reorderSections(state, draggedSectionId, targetSectionId, position);
+          draggedSectionId = "";
+          emitChange();
+          render();
         });
       });
 

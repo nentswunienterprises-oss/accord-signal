@@ -310,6 +310,33 @@
     });
   }
 
+  function reorderSections(currentState, sourceSectionId, targetSectionId, position = "before") {
+    const normalized = coerceState(currentState);
+    const sourceIndex = normalized.sections.findIndex((section) => section.id === sourceSectionId);
+    const targetIndex = normalized.sections.findIndex((section) => section.id === targetSectionId);
+
+    if (sourceIndex === -1 || targetIndex === -1 || sourceIndex === targetIndex) {
+      return normalized;
+    }
+
+    const nextSections = normalized.sections.slice();
+    const [movedSection] = nextSections.splice(sourceIndex, 1);
+    let insertionIndex = targetIndex;
+
+    if (position === "after") {
+      insertionIndex += sourceIndex < targetIndex ? 0 : 1;
+    } else if (sourceIndex < targetIndex) {
+      insertionIndex -= 1;
+    }
+
+    nextSections.splice(Math.max(0, Math.min(insertionIndex, nextSections.length)), 0, movedSection);
+
+    return coerceState({
+      ...normalized,
+      sections: nextSections,
+    });
+  }
+
   function getLineItemTotal(item) {
     return roundMoney(Number(item.quantity || 0) * Number(item.unitPrice || 0));
   }
@@ -442,6 +469,7 @@
     getDefaultState,
     getDefaultSections,
     getLineItemTotal,
+    reorderSections,
     toFrontmatter,
     buildMarkdown,
   };

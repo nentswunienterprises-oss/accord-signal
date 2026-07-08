@@ -1087,6 +1087,24 @@ button {
   padding: 1.1rem;
 }
 
+.tool-subcard[draggable="true"] {
+  cursor: grab;
+}
+
+.tool-subcard[draggable="true"]:active {
+  cursor: grabbing;
+}
+
+.tool-subcard.is-dragging {
+  opacity: 0.72;
+  transform: scale(0.996);
+}
+
+.tool-subcard.is-drop-target {
+  border-color: var(--olive);
+  box-shadow: 0 16px 36px rgba(107, 111, 61, 0.12);
+}
+
 .tool-card-heading,
 .tool-subcard-header {
   display: flex;
@@ -1123,6 +1141,11 @@ button {
   flex-wrap: wrap;
   align-items: end;
   gap: 0.8rem;
+}
+
+.tool-actions-row-tight {
+  gap: 0.5rem;
+  margin-top: -0.2rem;
 }
 
 .tool-mini-button {
