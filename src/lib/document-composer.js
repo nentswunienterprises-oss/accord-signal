@@ -38,24 +38,32 @@
         {
           id: createId("section"),
           title: "Objective",
+          heading: "",
+          subheading: "",
           body: "Describe the institutional objective this proposal is designed to address.",
           bullets: [],
         },
         {
           id: createId("section"),
           title: "Scope of Work",
+          heading: "",
+          subheading: "",
           body: "Outline the workstreams, deliverables, and operating responsibilities included in the engagement.",
           bullets: ["Capability diagnosis", "Role architecture", "Delivery rhythm"],
         },
         {
           id: createId("section"),
           title: "Delivery Approach",
+          heading: "",
+          subheading: "",
           body: "Clarify how the work will be sequenced, reviewed, and governed.",
           bullets: [],
         },
         {
           id: createId("section"),
           title: "Commercial Terms",
+          heading: "",
+          subheading: "",
           body: "State the commercial basis, timing assumptions, and payment expectations.",
           bullets: [],
         },
@@ -67,12 +75,16 @@
         {
           id: createId("section"),
           title: "Scope Summary",
+          heading: "",
+          subheading: "",
           body: "Summarize the quoted work and any planning assumptions.",
           bullets: [],
         },
         {
           id: createId("section"),
           title: "Commercial Notes",
+          heading: "",
+          subheading: "",
           body: "Clarify exclusions, validity period, and invoicing expectations.",
           bullets: [],
         },
@@ -84,18 +96,24 @@
         {
           id: createId("section"),
           title: "Purpose",
+          heading: "",
+          subheading: "",
           body: "State the internal purpose of this document and the operational context it addresses.",
           bullets: [],
         },
         {
           id: createId("section"),
           title: "Key Direction",
+          heading: "",
+          subheading: "",
           body: "Set out the decisions, standards, or instructions that internal teams are expected to follow.",
           bullets: [],
         },
         {
           id: createId("section"),
           title: "Execution Notes",
+          heading: "",
+          subheading: "",
           body: "Clarify owners, timing, dependencies, and any internal follow-through required.",
           bullets: [],
         },
@@ -106,18 +124,24 @@
       {
         id: createId("section"),
         title: "Context",
+        heading: "",
+        subheading: "",
         body: "Set out the situation, instruction, or concern that this letter addresses.",
         bullets: [],
       },
       {
         id: createId("section"),
         title: "Response",
+        heading: "",
+        subheading: "",
         body: "State the core response, finding, or direction clearly and directly.",
         bullets: [],
       },
       {
         id: createId("section"),
         title: "Next Steps",
+        heading: "",
+        subheading: "",
         body: "List the immediate actions, owners, or follow-up commitments.",
         bullets: [],
       },
@@ -210,6 +234,8 @@
     return {
       id: section?.id || createId(`section-${index}`),
       title: String(section?.title || "").trim(),
+      heading: String(section?.heading || "").trim(),
+      subheading: String(section?.subheading || "").trim(),
       body: String(section?.body || "").trim(),
       bullets: Array.isArray(section?.bullets)
         ? section.bullets.map((bullet) => String(bullet || "").trim()).filter(Boolean)
@@ -351,6 +377,14 @@
 
     normalized.sections.forEach((section) => {
       parts.push(`## ${section.title}`);
+
+        if (section.heading) {
+          parts.push(`### ${section.heading}`);
+        }
+
+        if (section.subheading) {
+          parts.push(`#### ${section.subheading}`);
+        }
 
       if (section.body) {
         parts.push(section.body);

@@ -48,9 +48,25 @@
                 <h3>Section ${index + 1}</h3>
                 <button class="button button-ghost tool-mini-button" type="button" data-action="remove-section" data-section-id="${section.id}">Remove</button>
               </div>
+              <div class="tool-actions-row tool-actions-row-tight">
+                <button class="button button-ghost tool-mini-button" type="button" data-action="add-section-heading" data-section-id="${section.id}">Add heading</button>
+                <button class="button button-ghost tool-mini-button" type="button" data-action="add-section-subheading" data-section-id="${section.id}">Add subheading</button>
+              </div>
               <label class="field field-full">
                 <span>Section title</span>
                 <input type="text" data-section-field="title" data-section-id="${section.id}" value="${escapeAttribute(section.title)}">
+              </label>
+              <label class="field field-full">
+                <span>Heading</span>
+                <input type="text" data-section-field="heading" data-section-id="${section.id}" value="${escapeAttribute(
+                  section.heading || ""
+                )}" placeholder="Add a heading under the section title">
+              </label>
+              <label class="field field-full">
+                <span>Subheading</span>
+                <input type="text" data-section-field="subheading" data-section-id="${section.id}" value="${escapeAttribute(
+                  section.subheading || ""
+                )}" placeholder="Add a subheading under the heading">
               </label>
               <label class="field field-full">
                 <span>Body</span>
@@ -436,10 +452,52 @@
                 {
                   id: composer.createId("section"),
                   title: "New Section",
+                  heading: "",
+                  subheading: "",
                   body: "",
                   bullets: [],
                 },
               ],
+            });
+            emitChange();
+            render();
+            return;
+          }
+
+          if (action === "add-section-heading") {
+            const sectionId = event.currentTarget.getAttribute("data-section-id");
+            state = composer.coerceState({
+              ...state,
+              sections: state.sections.map((section) => {
+                if (section.id !== sectionId) {
+                  return section;
+                }
+
+                return {
+                  ...section,
+                  heading: section.heading || "New Heading",
+                };
+              }),
+            });
+            emitChange();
+            render();
+            return;
+          }
+
+          if (action === "add-section-subheading") {
+            const sectionId = event.currentTarget.getAttribute("data-section-id");
+            state = composer.coerceState({
+              ...state,
+              sections: state.sections.map((section) => {
+                if (section.id !== sectionId) {
+                  return section;
+                }
+
+                return {
+                  ...section,
+                  subheading: section.subheading || "New Subheading",
+                };
+              }),
             });
             emitChange();
             render();
