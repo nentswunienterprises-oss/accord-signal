@@ -40,11 +40,42 @@
       return section.bullets.join("\n");
     }
 
+    function renderSectionOrderSummary() {
+      if (!state.sections.length) {
+        return "";
+      }
+
+      return `
+        <section class="tool-card tool-summary-card">
+          <div class="tool-card-heading">
+            <div>
+              <p class="statement-index">Order</p>
+              <h2>Section summary</h2>
+            </div>
+            <p class="tool-status">Drag to reorder the full document.</p>
+          </div>
+          <ol class="section-order-list">
+            ${state.sections
+              .map(
+                (section, index) => `
+                  <li class="section-order-item" data-section-id="${section.id}" draggable="true">
+                    <span class="section-order-handle" aria-hidden="true">⋮⋮</span>
+                    <span class="section-order-index">${index + 1}</span>
+                    <span class="section-order-title">${escapeHtml(section.title || `Section ${index + 1}`)}</span>
+                  </li>
+                `
+              )
+              .join("")}
+          </ol>
+        </section>
+      `;
+    }
+
     function renderSections() {
       return state.sections
         .map(
           (section, index) => `
-            <article class="tool-card tool-subcard" data-section-id="${section.id}" data-section-index="${index}" draggable="true">
+            <article class="tool-card tool-subcard" data-section-id="${section.id}" data-section-index="${index}">
               <div class="tool-subcard-header">
                 <h3>Section ${index + 1}</h3>
                 <button class="button button-ghost tool-mini-button" type="button" data-action="remove-section" data-section-id="${section.id}">Remove</button>
@@ -295,6 +326,7 @@
             </div>
             <button class="button button-secondary tool-mini-button" type="button" data-action="add-section">Add section</button>
           </div>
+          ${renderSectionOrderSummary()}
           <div class="tool-stack">${renderSections()}</div>
         </section>
 
@@ -410,6 +442,59 @@
       });
 
       root.querySelectorAll("[data-section-id][draggable='true']").forEach((element) => {
+        element.addEventListener("dragstart", (event) => {
+          draggedSectionId = event.currentTarget.getAttribute("data-section-id") || "";
+          event.dataTransfer.effectAllowed = "move";
+          event.dataTransfer.setData("text/plain", draggedSectionId);
+          event.currentTarget.classList.add("is-dragging");
+        });
+
+        element.addEventListener("dragend", (event) => {
+          draggedSectionId = "";
+          event.currentTarget.classList.remove("is-dragging");
+          root.querySelectorAll(".is-drop-target").forEach((node) => node.classList.remove("is-drop-target"));
+        });
+
+        element.addEventListener("dragover", (event) => {
+          event.preventDefault();
+          event.dataTransfer.dropEffect = "move";
+
+          const targetSectionId = event.currentTarget.getAttribute("data-section-id");
+          const rect = event.currentTarget.getBoundingClientRect();
+          const position = event.clientY > rect.top + rect.height / 2 ? "after" : "before";
+
+          event.currentTarget.setAttribute("data-drop-position", position);
+          root.querySelectorAll(".is-drop-target").forEach((node) => node.classList.remove("is-drop-target"));
+          event.currentTarget.classList.add("is-drop-target");
+
+          if (targetSectionId === draggedSectionId) {
+            return;
+          }
+        });
+
+        element.addEventListener("dragleave", (event) => {
+          event.currentTarget.classList.remove("is-drop-target");
+          event.currentTarget.removeAttribute("data-drop-position");
+        });
+
+        element.addEventListener("drop", (event) => {
+          event.preventDefault();
+
+          const targetSectionId = event.currentTarget.getAttribute("data-section-id");
+          const position = event.currentTarget.getAttribute("data-drop-position") || "before";
+
+          if (!draggedSectionId || !targetSectionId || draggedSectionId === targetSectionId) {
+            return;
+          }
+
+          state = composer.reorderSections(state, draggedSectionId, targetSectionId, position);
+          draggedSectionId = "";
+          emitChange();
+          render();
+        });
+      });
+
+      root.querySelectorAll(".section-order-item[draggable='true']").forEach((element) => {
         element.addEventListener("dragstart", (event) => {
           draggedSectionId = event.currentTarget.getAttribute("data-section-id") || "";
           event.dataTransfer.effectAllowed = "move";

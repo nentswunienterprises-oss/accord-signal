@@ -1083,26 +1083,12 @@ button {
   padding: 1.5rem;
 }
 
+.tool-summary-card {
+  padding-bottom: 1rem;
+}
+
 .tool-subcard {
   padding: 1.1rem;
-}
-
-.tool-subcard[draggable="true"] {
-  cursor: grab;
-}
-
-.tool-subcard[draggable="true"]:active {
-  cursor: grabbing;
-}
-
-.tool-subcard.is-dragging {
-  opacity: 0.72;
-  transform: scale(0.996);
-}
-
-.tool-subcard.is-drop-target {
-  border-color: var(--olive);
-  box-shadow: 0 16px 36px rgba(107, 111, 61, 0.12);
 }
 
 .tool-card-heading,
@@ -1146,6 +1132,62 @@ button {
 .tool-actions-row-tight {
   gap: 0.5rem;
   margin-top: -0.2rem;
+}
+
+.section-order-list {
+  display: grid;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.section-order-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0.8rem;
+  min-height: 48px;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid rgba(35, 36, 38, 0.08);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.72);
+  cursor: grab;
+}
+
+.section-order-item:active {
+  cursor: grabbing;
+}
+
+.section-order-item.is-dragging {
+  opacity: 0.72;
+}
+
+.section-order-item.is-drop-target {
+  border-color: var(--olive);
+  box-shadow: 0 16px 36px rgba(107, 111, 61, 0.12);
+}
+
+.section-order-handle,
+.section-order-index {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--olive);
+}
+
+.section-order-handle {
+  line-height: 1;
+}
+
+.section-order-title {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 0.86rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--charcoal);
 }
 
 .tool-mini-button {
